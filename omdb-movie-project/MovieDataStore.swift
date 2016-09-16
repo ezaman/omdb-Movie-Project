@@ -13,7 +13,9 @@ class MovieDataStore {
     
     
     static let sharedDataStore = MovieDataStore()
+   
     var movieResults = [Movie]()
+    
     private init() {}
     
     
@@ -43,12 +45,47 @@ class MovieDataStore {
              3. add movie objects to datastore array
              4. use completion handler to inform collection view that array of movies is ready
              */
-            
-            
+     
             
         }
     }
+    
+func searchMoviesWithID(movie: Movie, completion: (NSDictionary)-> ()){
+        OMDBAPIClient.moviesWithID(movie.imdbID!) { (dictionary) in
+            
+        movie.movieDetails(dictionary, completion: { success in
+            if success {
+                completion(dictionary)
+            }
+        })
+//            for detailDict in dictionary {
+//                if let movieDictionary = Movie.init(detailDictionary: detailDict) {
+//                    self.movieResults.append(movieDictionary)
+//                }
+//            }
+
+        }
+    }
+    
+    func getFullPlot(movie: Movie, completion: ([Movie]) -> ()) {
+       OMDBAPIClient.fullPlot(movie.imdbID!) { (dictionary) in
+        
+        for plotDict in dictionary {
+            
+            if let plotDictionary = Movie.init(plotDictionary: plotDict){
+                self.movieResults.append(plotDictionary)
+            }
+        
+        }
+        
+        completion(self.movieResults)
+        
+        
+    }
+    
+    
+
 }
 
-
+}
 
