@@ -13,11 +13,26 @@ class FullPlotViewController: UIViewController {
     
     @IBOutlet weak var fullPlot: UILabel!
     
-    var movie: Movie?
     
+    var movie: Movie!
+    let store = MovieDataStore.sharedDataStore
+  
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+     guard let unwrappedMovie = self.movie else {return}
+        
+    self.store.getFullPlot(movie) { (dictionary) in
+         let plot = dictionary["Plot"] as? String
+       
+         print(plot)
+         self.fullPlot.text = plot
+        
+        }
+        
+        
+        
         // Do any additional setup after loading the view.
     }
 

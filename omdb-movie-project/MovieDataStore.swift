@@ -13,79 +13,82 @@ class MovieDataStore {
     
     
     static let sharedDataStore = MovieDataStore()
-   
     var movieResults = [Movie]()
-    
+    var currentQuery = ""
+    let omdbClient = OMDBAPIClient.sharedInstance
+    //var pageNumber = 1
+    //var totalResults = 0
+
     private init() {}
     
+
     
-    func searchMoviesWith(query: String, completionHandler: (NSArray) -> ()){
-        
-        OMDBAPIClient.searchOMDBAPI(query) { (jsonResults) in
-            //print(jsonResults)
+    func searchMoviesWith(query: String, page: Int, completionHandler: Bool -> ()){
+
+        // save query first through
+        // check query each time to see if it's changed
+        // if query changed, reset currentQuery, pageNumber, totalReselts
+//        print("page number outside \(page)")
+
+        omdbClient.searchOMDBAPI(query, page: page) { jsonResults in
+//            print("*****************\n\(jsonResults)\n*******************")
+//            print("page number inside \(page)")
+
+            let moviesArray  = jsonResults["Search"] as? [NSDictionary]
+            guard let unwrappedMoviesArray = moviesArray else {return }
             
-            for movie in jsonResults {
+
+        // let resultCount = jsonResults["totalResults"] as? Int
+ 
+//            print(self.totalResults)
+            
+            for movie in unwrappedMoviesArray {
                 if let movieDictionary = Movie.init(movieDict: movie){
                     
                     self.movieResults.append(movieDictionary)
+                    
+//                    print("movie added: \(movieDictionary.title)")
                     //print(self.movieResults)
                     
                 }
-                
-                for movies in self.movieResults {
-                    //print(movies.title!)
-                }
-                
-                
             }
-            completionHandler(self.movieResults)
-            /*
-             1. get array of results from json
-             2. loop over array to create movie objects
-             3. add movie objects to datastore array
-             4. use completion handler to inform collection view that array of movies is ready
-             */
-     
+            
+            if self.movieResults.count > 0 {
+                completionHandler(true)
+            } else {
+                completionHandler(false)
+            }
             
         }
     }
     
 func searchMoviesWithID(movie: Movie, completion: (NSDictionary)-> ()){
-        OMDBAPIClient.moviesWithID(movie.imdbID!) { (dictionary) in
+        omdbClient.moviesWithID(movie.imdbID!) { (dictionary) in
             
         movie.movieDetails(dictionary, completion: { success in
             if success {
                 completion(dictionary)
             }
         })
-//            for detailDict in dictionary {
-//                if let movieDictionary = Movie.init(detailDictionary: detailDict) {
-//                    self.movieResults.append(movieDictionary)
-//                }
-//            }
+        }
+    }
+    
+    func getFullPlot(movie: Movie, completion: (NSDictionary) -> ()) {
+       omdbClient.fullPlot(movie.imdbID!) { (dictionary) in
 
+    movie.movieDetails(dictionary, completion: { (success) in
+        if success {
+            completion(dictionary)
         }
+    })
+
     }
-    
-    func getFullPlot(movie: Movie, completion: ([Movie]) -> ()) {
-       OMDBAPIClient.fullPlot(movie.imdbID!) { (dictionary) in
         
-        for plotDict in dictionary {
-            
-            if let plotDictionary = Movie.init(plotDictionary: plotDict){
-                self.movieResults.append(plotDictionary)
-            }
-        
-        }
-        
-        completion(self.movieResults)
-        
-        
-    }
-    
-    
 
 }
+//    func nextPage() {
+//       omdbClient.nextPage()
+//    }
 
 }
 

@@ -59,32 +59,7 @@ class Movie
             self.imdbID = movieImdbID
             
         }
-    
-    
-//    init?(detailDictionary: NSDictionary)
-//    {
-//        guard let
-//        
-//        moviePlot = detailDictionary["Plot"] as? String,
-//        movieActors = detailDictionary["Actors"] as? String,
-//        movieReleased = detailDictionary["Released"] as? String,
-//        movieDirector = detailDictionary["Director"] as? String,
-//        movieWriter = detailDictionary["Writer"] as? String,
-//        movieImdbRating = detailDictionary["imdbRating"] as? String,
-//        movieMetaScore = detailDictionary["Metascore"] as? String
-//        
-//        else { return }
-//        
-//        self.plot = moviePlot
-//        self.actors = movieActors
-//        self.released = movieReleased
-//        self.director = movieDirector
-//        self.writer = movieWriter
-//        self.imdbRating = movieImdbRating
-//        self.metaScore = movieMetaScore
-//    
-//    }
-    
+
     
     func movieDetails(dictionary: NSDictionary, completion: (Bool) -> ()) {
         
@@ -99,19 +74,12 @@ class Movie
         completion(true)
     }
     
-    init?(plotDictionary: NSDictionary) {
+    
+    func plotDictionary(dictionary: NSDictionary, completion: (Bool) -> ()) {
         
-       guard let
-        
-    movieFullPlot = plotDictionary["Plot"] as? String
-        
-    else { return }
-        
-    self.fullPlot = movieFullPlot
+        self.fullPlot = dictionary["Plot"] as? String
         
     }
-    
-    
     
     }
 
