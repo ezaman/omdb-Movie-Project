@@ -36,9 +36,11 @@ class DetailViewController: UIViewController {
         guard let unwrappedMovie = self.movie else {return}
         self.title = unwrappedMovie.title
 
-       // NSOperationQueue.mainQueue(getData())
-            getData()
-  
+////        NSOperationQueue.mainQueue(getData())
+        dispatch_async(dispatch_get_main_queue(),{
+            self.getData()
+//        
+        })
     }
     
     
@@ -67,6 +69,7 @@ class DetailViewController: UIViewController {
             self.directorName.text = director
             self.starNames.text = actors
             self.writerName.text = writer
+            self.writerName.sizeToFit()
             self.imdbScore.text = imdbRating
             self.metascore.text = metaScore
             self.releaseYear.text = released
@@ -86,7 +89,7 @@ class DetailViewController: UIViewController {
                 }
               }
             }
-          })
+           })
             
         }
         
