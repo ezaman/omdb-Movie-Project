@@ -17,6 +17,14 @@ class DetailViewController: UIViewController {
     @IBAction func fullPlotDescription(sender: AnyObject) {
     }
     
+    @IBOutlet weak var releaseYear: UILabel!
+    
+    @IBOutlet weak var writerName: UILabel!
+    
+    @IBOutlet weak var imdbScore: UILabel!
+    
+    @IBOutlet weak var metascore: UILabel!
+    
     var movie: Movie?
     let store = MovieDataStore.sharedDataStore
     
@@ -27,47 +35,12 @@ class DetailViewController: UIViewController {
         
         guard let unwrappedMovie = self.movie else {return}
         self.title = unwrappedMovie.title
-        
-       // getData()
-        
+
        // NSOperationQueue.mainQueue(getData())
-        
-       
             getData()
   
-        
-        //    self.store.searchMoviesWithID(unwrappedMovie) { (dictionary) in
-        //
-        //        let plot = dictionary["Plot"] as? String
-        //
-        //        let actors = dictionary["Actors"] as? String
-        //        let released = dictionary["Released"] as? String
-        //        let director = dictionary["Director"] as? String
-        //        let writer = dictionary["Writer"] as? String
-        //        let imdbRating = dictionary["imdbRating"] as? String
-        //        let metaScore = dictionary["Metascore"] as? String
-        //        let image = dictionary["Poster"] as? String
-        //
-        //        self.shortPlot.text = plot
-        //        self.directorName.text = director
-        //        self.starNames.text = actors
-        //
-        //        let url = NSURL(string: image!)
-        //        if let urldata = url {
-        //            var imageData = NSData(contentsOfURL: urldata)
-        //            if let newData = imageData {
-        //
-        //                self.detailImage.image = UIImage.init(data: newData)
-        //            }
-        //
-        //        }
-        //
-        //        }
-        //
-        
-        
-        // Do any additional setup after loading the view.
     }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -93,14 +66,16 @@ class DetailViewController: UIViewController {
             self.shortPlot.text = plot
             self.directorName.text = director
             self.starNames.text = actors
-            
+            self.writerName.text = writer
+            self.imdbScore.text = imdbRating
+            self.metascore.text = metaScore
+            self.releaseYear.text = released
             
                 if let image = dictionary["Poster"] as? String {
                    if image == "N/A" {
                  self.detailImage.image = UIImage.init(named: "frown")
                 }
             
-
             let url = NSURL(string: image)
             
             if let urldata = url {

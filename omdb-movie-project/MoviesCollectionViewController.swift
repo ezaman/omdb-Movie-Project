@@ -126,6 +126,8 @@ class MoviesCollectionViewController: UICollectionViewController, UISearchBarDel
                     
                     dispatch_async(dispatch_get_main_queue(),{
                         cell.moviePoster.image = UIImage.init(data: unwrappedPoster)
+                        
+                        
                       //  self.activityIndicator.hidden = false
                        // self.activityIndicator.stopAnimating()
                     })
