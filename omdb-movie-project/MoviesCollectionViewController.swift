@@ -12,7 +12,7 @@ import UIKit
 
 class MoviesCollectionViewController: UICollectionViewController, UISearchBarDelegate, UISearchDisplayDelegate{
     
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+  //  @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var titleArray = [String]()
     var posterArray = [String]()
@@ -40,13 +40,13 @@ class MoviesCollectionViewController: UICollectionViewController, UISearchBarDel
         searchBar.showsCancelButton = true
         //searchBar.text = "Comedy"
         self.navigationItem.titleView = searchBar
-        self.activityIndicator.hidden = false
-        self.activityIndicator.startAnimating()
+       // self.activityIndicator.hidden = true
+       // self.activityIndicator.startAnimating()
         
-        
-        
+       
         self.store.searchMoviesWith("Comedy", page: self.apiClient.pageNum) { (success) in
             NSOperationQueue.mainQueue().addOperationWithBlock({
+        
                 self.collectionView?.reloadData()
                 
             })
@@ -63,9 +63,15 @@ class MoviesCollectionViewController: UICollectionViewController, UISearchBarDel
         if unwrappedSearch == ""
         {
             self.store.movieResults.removeAll()
-            
+            self.apiClient.pageNum = 1
             dispatch_async(dispatch_get_main_queue(),{
-                self.collectionView?.reloadData()
+                self.store.searchMoviesWith("Comedy", page: self.apiClient.pageNum) { (success) in
+                    NSOperationQueue.mainQueue().addOperationWithBlock({
+                        self.collectionView?.reloadData()
+                        
+                    })
+                }
+
                 
             })
             
@@ -75,10 +81,9 @@ class MoviesCollectionViewController: UICollectionViewController, UISearchBarDel
             self.store.movieResults.removeAll()
             
             let search = unwrappedSearch.stringByReplacingOccurrencesOfString(" ", withString: "+").lowercaseString
-            //self.store.pageNumber = 1
-            //self.store.nextPage()
-            //            self.apiClient.nextPage()
-            //            print("page number outside \(self.apiClient.pageNum)")
+         
+            self.apiClient.pageNum = 1
+            
             self.store.searchMoviesWith(search, page: self.apiClient.pageNum, completionHandler: { (success) in
                 //                print("page number inside \(self.apiClient.pageNum)")
                 dispatch_async(dispatch_get_main_queue(),{
@@ -108,13 +113,19 @@ class MoviesCollectionViewController: UICollectionViewController, UISearchBarDel
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! CollectionViewCell
         
-        cell.movieName.text = self.store.movieResults[indexPath.row].title
-        
+        //cell.movieName.text = self.store.movieResults[indexPath.row].title
         // NSOperationQueue().addOperationWithBlock {
+       let backgroundView = UIView()
+        
+        backgroundView.backgroundColor = UIColor.whiteColor()
+        cell.selectedBackgroundView = backgroundView
+        
+       cell.layer.borderWidth = 2.0
+       cell.layer.borderColor = UIColor.whiteColor().CGColor
         
         if let unwrappedImage = self.store.movieResults[indexPath.row].poster {
             if unwrappedImage == "N/A" {
-                cell.moviePoster.image = UIImage.init(named: "No_Image")
+                cell.moviePoster.image = UIImage.init(named: "frown")
             }
             let imageURL = NSURL(string: unwrappedImage)
             
@@ -125,39 +136,18 @@ class MoviesCollectionViewController: UICollectionViewController, UISearchBarDel
                     
                     dispatch_async(dispatch_get_main_queue(),{
                         cell.moviePoster.image = UIImage.init(data: unwrappedPoster)
-                        self.activityIndicator.hidden = false
-                        self.activityIndicator.stopAnimating()
+                      //  self.activityIndicator.hidden = false
+                       // self.activityIndicator.stopAnimating()
                     })
                 }
             }
-            
-            
-            
-            //            let urlData = NSURL(string: self.store.movieResults[indexPath.row].poster!)
-            //
-            //            if let url = urlData {
-            //
-            //                if url == "N/A" {
-            //                    cell.moviePoster.image = UIImage.init(named: "no-poster")
-            //                }
-            //                else {
-            //                let imageData = NSData(contentsOfURL: url)
-            //                if let newData = imageData {
-            //
-            //                    NSOperationQueue.mainQueue().addOperationWithBlock({
-            //                        cell.moviePoster.image = UIImage.init(data: newData)
-            //                    })
-            //
-            //                }
-            //
-            //              }
-            //            }
+     
         }
         
         
         return cell
     }
-    
+  
     override func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
         
         let searchResult = searchBar.text
@@ -167,8 +157,8 @@ class MoviesCollectionViewController: UICollectionViewController, UISearchBarDel
             //print("\(self.store.movieResults.count - 1) is equal \(indexPath.row)")
             if unwrappedSearch == ""
             {
-                //self.store.nextPage()
-                self.apiClient.pageNum = 2
+                
+                self.apiClient.nextPage()
                 self.store.searchMoviesWith("Comedy", page: apiClient.pageNum, completionHandler: { (success) in
                     dispatch_async(dispatch_get_main_queue(),{
                         self.collectionView?.reloadData()
@@ -178,11 +168,11 @@ class MoviesCollectionViewController: UICollectionViewController, UISearchBarDel
             }
             if unwrappedSearch != ""
             {
+              
                 self.apiClient.nextPage()
-                print("counts \(self.store.movieResults.count)")
                 
-                //                self.apiClient.
-                //                print("page number outside \(self.apiClient.pageNum)")
+                //print("counts \(self.store.movieResults.count)")
+                //print("page number outside \(self.apiClient.pageNum)")
                 
                 self.store.searchMoviesWith(unwrappedSearch, page: apiClient.pageNum,completionHandler: { (success) in
                     //                    print("page number inside \(self.apiClient.pageNum)")
@@ -194,17 +184,17 @@ class MoviesCollectionViewController: UICollectionViewController, UISearchBarDel
                 //
             }
             
-            
-            self.apiClient.nextPage()
-            self.store.searchMoviesWith(self.searchBar.text!, page: apiClient.pageNum,completionHandler: { success in
-                print("results received in 'willDisplayCell'")
-                if success {
-                    NSOperationQueue.mainQueue().addOperationWithBlock({
-                        self.collectionView?.reloadData()
-                    })
-                    
-                }
-            })
+//            
+//            self.apiClient.nextPage()
+//            self.store.searchMoviesWith(self.searchBar.text!, page: apiClient.pageNum,completionHandler: { success in
+//               // print("results received in 'willDisplayCell'")
+//                if success {
+//                    NSOperationQueue.mainQueue().addOperationWithBlock({
+//                        self.collectionView?.reloadData()
+//                    })
+//                    
+//                }
+//            })
         }
         
         

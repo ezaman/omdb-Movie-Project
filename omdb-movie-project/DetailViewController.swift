@@ -28,11 +28,13 @@ class DetailViewController: UIViewController {
         guard let unwrappedMovie = self.movie else {return}
         self.title = unwrappedMovie.title
         
-        getData()
+       // getData()
         
-        NSOperationQueue.mainQueue()
+       // NSOperationQueue.mainQueue(getData())
         
-        
+       
+            getData()
+  
         
         //    self.store.searchMoviesWithID(unwrappedMovie) { (dictionary) in
         //
@@ -76,7 +78,6 @@ class DetailViewController: UIViewController {
     func getData() {
         guard let unwrappedMovie = self.movie else {return}
         self.store.searchMoviesWithID(unwrappedMovie) { (dictionary) in
-            
             let plot = dictionary["Plot"] as? String
             
             let actors = dictionary["Actors"] as? String
@@ -85,21 +86,32 @@ class DetailViewController: UIViewController {
             let writer = dictionary["Writer"] as? String
             let imdbRating = dictionary["imdbRating"] as? String
             let metaScore = dictionary["Metascore"] as? String
-            let image = dictionary["Poster"] as? String
+           // if let image = dictionary["Poster"] as? String
             
+            dispatch_async(dispatch_get_main_queue(),{
+
             self.shortPlot.text = plot
             self.directorName.text = director
             self.starNames.text = actors
             
-            let url = NSURL(string: image!)
+            
+                if let image = dictionary["Poster"] as? String {
+                   if image == "N/A" {
+                 self.detailImage.image = UIImage.init(named: "frown")
+                }
+            
+
+            let url = NSURL(string: image)
+            
             if let urldata = url {
                 var imageData = NSData(contentsOfURL: urldata)
                 if let newData = imageData {
                     
                     self.detailImage.image = UIImage.init(data: newData)
                 }
-                
+              }
             }
+          })
             
         }
         

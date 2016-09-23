@@ -26,9 +26,10 @@ class FullPlotViewController: UIViewController {
     self.store.getFullPlot(movie) { (dictionary) in
          let plot = dictionary["Plot"] as? String
        
-         print(plot)
+         //print(plot)
+        dispatch_async(dispatch_get_main_queue(),{
          self.fullPlot.text = plot
-        
+        })
         }
         
         

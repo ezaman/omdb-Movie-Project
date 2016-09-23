@@ -21,14 +21,14 @@ class OMDBAPIClient {
     func searchOMDBAPI(query: String, page: Int, completionHandler: ([String: AnyObject]) -> ()) {
         //write networking statements, pass back json dictionary to datastore
    
-//        print("page number \(page)")
+        print("page number \(page)")
 
         let searchString = query.stringByReplacingOccurrencesOfString(" ", withString: "+")
         let urlString = "https://www.omdbapi.com/?s=\(searchString)&page=\(page)"
 //        let urlWithParameters = "\(urlString)\(page)"
         let url = NSURL(string: urlString)
         guard let unwrappedURL = url else { fatalError("error") }
-        print(unwrappedURL)
+      //  print(unwrappedURL)
 
         var session = NSURLSession.sharedSession()
         
@@ -40,8 +40,8 @@ class OMDBAPIClient {
             do {
                 //let unwrappedData = data else { fatalError("error") }
                 var jsonData = try NSJSONSerialization.JSONObjectWithData(unwrappedData, options: NSJSONReadingOptions.AllowFragments) as! [String: AnyObject]
-                print("uw URL: \(unwrappedURL)")
-                print("##########################\n############################\n\(jsonData)\n##################################\n##############################")
+                //print("uw URL: \(unwrappedURL)")
+               // print("##########################\n############################\n\(jsonData)\n##################################\n##############################")
 //                let moviesArray  = jsonData["Search"] as? [NSDictionary]
 //                guard let unwrappedMoviesArray = moviesArray else {return }
 //
