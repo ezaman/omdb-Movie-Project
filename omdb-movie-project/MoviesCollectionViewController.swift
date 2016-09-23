@@ -8,17 +8,9 @@
 
 import UIKit
 
-//private let reuseIdentifier = "Cell"
 
 class MoviesCollectionViewController: UICollectionViewController, UISearchBarDelegate, UISearchDisplayDelegate{
     
-  //  @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    
-    var titleArray = [String]()
-    var posterArray = [String]()
-    var yearArray = [String]()
-    var idArray = [String]()
-    var typeArray = [String]()
     
     var searchBar = UISearchBar(frame: CGRectZero)
     var image = UIImage()
@@ -28,9 +20,7 @@ class MoviesCollectionViewController: UICollectionViewController, UISearchBarDel
     let store = MovieDataStore.sharedDataStore
     let apiClient = OMDBAPIClient()
     
-    var searchString = ""
-    
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -154,10 +144,9 @@ class MoviesCollectionViewController: UICollectionViewController, UISearchBarDel
         guard let unwrappedSearch = searchResult else {return}
         
         if self.store.movieResults.count - 1 == indexPath.row {
-            //print("\(self.store.movieResults.count - 1) is equal \(indexPath.row)")
+            
             if unwrappedSearch == ""
             {
-                
                 self.apiClient.nextPage()
                 self.store.searchMoviesWith("Comedy", page: apiClient.pageNum, completionHandler: { (success) in
                     dispatch_async(dispatch_get_main_queue(),{
@@ -181,20 +170,9 @@ class MoviesCollectionViewController: UICollectionViewController, UISearchBarDel
                         self.collectionView?.reloadData()
                     })
                 })
-                //
+                
             }
-            
-//            
-//            self.apiClient.nextPage()
-//            self.store.searchMoviesWith(self.searchBar.text!, page: apiClient.pageNum,completionHandler: { success in
-//               // print("results received in 'willDisplayCell'")
-//                if success {
-//                    NSOperationQueue.mainQueue().addOperationWithBlock({
-//                        self.collectionView?.reloadData()
-//                    })
-//                    
-//                }
-//            })
+
         }
         
         
@@ -205,7 +183,7 @@ class MoviesCollectionViewController: UICollectionViewController, UISearchBarDel
             let detailVC = segue.destinationViewController as! DetailViewController
             
             let indexPath = collectionView!.indexPathForCell(sender as! UICollectionViewCell)
-            //print(indexPath)
+       
             if let unwrappedPath = indexPath {
                 
                 let movieID = self.store.movieResults[unwrappedPath.row]

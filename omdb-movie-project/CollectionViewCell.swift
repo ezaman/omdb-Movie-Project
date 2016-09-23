@@ -13,7 +13,7 @@ class CollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var moviePoster: UIImageView!
     
-  //  @IBOutlet weak var movieName: UILabel!
+
     
     
 }
