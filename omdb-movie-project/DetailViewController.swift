@@ -10,8 +10,9 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
+    @IBOutlet weak var shortPlot: UITextView!
     @IBOutlet weak var detailImage: UIImageView!
-    @IBOutlet weak var shortPlot: UILabel!
+   // @IBOutlet weak var shortPlot: UILabel!
     @IBOutlet weak var directorName: UILabel!
     @IBOutlet weak var starNames: UILabel!
     @IBAction func fullPlotDescription(sender: AnyObject) {

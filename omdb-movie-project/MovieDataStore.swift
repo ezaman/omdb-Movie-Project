@@ -16,19 +16,19 @@ class MovieDataStore {
     var movieResults = [Movie]()
     var currentQuery = ""
     let omdbClient = OMDBAPIClient.sharedInstance
-   
-
+    
+    
     private init() {}
     
-
+    
     
     func searchMoviesWith(query: String, page: Int, completionHandler: Bool -> ()){
-
-      
-
+        
+        
+        
         omdbClient.searchOMDBAPI(query, page: page) { jsonResults in
-
-
+            
+            
             let moviesArray  = jsonResults["Search"] as? [NSDictionary]
             guard let unwrappedMoviesArray = moviesArray else {return }
             
@@ -50,30 +50,30 @@ class MovieDataStore {
         }
     }
     
-func searchMoviesWithID(movie: Movie, completion: (NSDictionary)-> ()){
+    func searchMoviesWithID(movie: Movie, completion: (NSDictionary)-> ()){
         omdbClient.moviesWithID(movie.imdbID!) { (dictionary) in
             
-        movie.movieDetails(dictionary, completion: { success in
-            if success {
-                completion(dictionary)
-            }
-        })
+            movie.movieDetails(dictionary, completion: { success in
+                if success {
+                    completion(dictionary)
+                }
+            })
         }
     }
     
     func getFullPlot(movie: Movie, completion: (NSDictionary) -> ()) {
-       omdbClient.fullPlot(movie.imdbID!) { (dictionary) in
-
-    movie.movieDetails(dictionary, completion: { (success) in
-        if success {
-            completion(dictionary)
+        omdbClient.fullPlot(movie.imdbID!) { (dictionary) in
+            
+            movie.movieDetails(dictionary, completion: { (success) in
+                if success {
+                    completion(dictionary)
+                }
+            })
+            
         }
-    })
-
-    }
         
-
-}
-
+        
+    }
+    
 }
 

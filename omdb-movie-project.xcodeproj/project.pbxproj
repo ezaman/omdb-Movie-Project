@@ -11,7 +11,6 @@
 		8F02D8401D8C32EF00C96C7A /* FullPlotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F02D83F1D8C32EF00C96C7A /* FullPlotViewController.swift */; };
 		8FF704A01D80814D00FF465B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF7049F1D80814D00FF465B /* AppDelegate.swift */; };
 		8FF704A51D80814D00FF465B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8FF704A31D80814D00FF465B /* Main.storyboard */; };
-		8FF704A81D80814D00FF465B /* omdb_movie_project.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8FF704A61D80814D00FF465B /* omdb_movie_project.xcdatamodeld */; };
 		8FF704AA1D80814D00FF465B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8FF704A91D80814D00FF465B /* Assets.xcassets */; };
 		8FF704AD1D80814D00FF465B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8FF704AB1D80814D00FF465B /* LaunchScreen.storyboard */; };
 		8FF704B51D80915600FF465B /* MoviesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF704B41D80915600FF465B /* MoviesCollectionViewController.swift */; };
@@ -28,7 +27,6 @@
 		8FF7049C1D80814D00FF465B /* omdb-movie-project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "omdb-movie-project.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FF7049F1D80814D00FF465B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8FF704A41D80814D00FF465B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		8FF704A71D80814D00FF465B /* omdb_movie_project.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = omdb_movie_project.xcdatamodel; sourceTree = "<group>"; };
 		8FF704A91D80814D00FF465B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8FF704AC1D80814D00FF465B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8FF704AE1D80814D00FF465B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -78,7 +76,6 @@
 				8FF704AE1D80814D00FF465B /* Info.plist */,
 				8FF7049F1D80814D00FF465B /* AppDelegate.swift */,
 				8FF704A91D80814D00FF465B /* Assets.xcassets */,
-				8FF704A61D80814D00FF465B /* omdb_movie_project.xcdatamodeld */,
 			);
 			path = "omdb-movie-project";
 			sourceTree = "<group>";
@@ -208,7 +205,6 @@
 				8FF704B71D80925800FF465B /* MovieDataStore.swift in Sources */,
 				8F02D8401D8C32EF00C96C7A /* FullPlotViewController.swift in Sources */,
 				8FF704A01D80814D00FF465B /* AppDelegate.swift in Sources */,
-				8FF704A81D80814D00FF465B /* omdb_movie_project.xcdatamodeld in Sources */,
 				8FF704B91D80936200FF465B /* OMDBAPIClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -364,19 +360,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		8FF704A61D80814D00FF465B /* omdb_movie_project.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				8FF704A71D80814D00FF465B /* omdb_movie_project.xcdatamodel */,
-			);
-			currentVersion = 8FF704A71D80814D00FF465B /* omdb_movie_project.xcdatamodel */;
-			path = omdb_movie_project.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 8FF704941D80814D00FF465B /* Project object */;
 }

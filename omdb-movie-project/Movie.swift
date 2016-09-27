@@ -9,20 +9,7 @@
 import Foundation
 
 
-class Movie
-
-{
-    
-    //    var title: String
-    //
-    //    init?(movieDict: [String: AnyObject]) {
-    //
-    //        if let jsonTitle = movieDict["Title"] as? String {
-    //            self.title = jsonTitle
-    //        } else {return nil}
-    //
-    //
-    //    }
+class Movie {
     
     var title: String?
     var poster: String?
