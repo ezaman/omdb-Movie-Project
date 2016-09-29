@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class FullPlotViewController: UIViewController {
 
@@ -20,19 +21,75 @@ class FullPlotViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+      
         
-     guard let unwrappedMovie = self.movie else {return}
+        gettingFullPlot()
         
-    self.store.getFullPlot(movie) { (dictionary) in
-         let plot = dictionary["Plot"] as? String
+        self.title = "Full Plot"
+//    guard let unwrappedMovie = self.movie else {return}
+//    self.store.getFullPlot(movie) {
+//         let plot = dictionary["Plot"] as? String
+//       
+//         //print(plot)
+//        dispatch_async(dispatch_get_main_queue(),{
+//         self.fullPlot.text = plot
+//        })
+//        }
+        
+        
+    }
+    
+    func gettingFullPlot()
+    {
+        let request = NSFetchRequest(entityName: "Favorites")
+        
+        do{
+            let object = try store.managedObjectContext.executeFetchRequest(request) as! [Favorites]
+            
+            guard let movieObject = self.movie else {return}
+            
+            if object.count == 0
+            {
+              
+                self.store.getFullPlot(movieObject)
+                {
+                    dispatch_async(dispatch_get_main_queue(),{
+                        self.fullPlot.text = self.movie.fullPlot
+                    
+                    })
+                }
+            }
+            
+            for movies in object
+            {
+                guard let savedMovie = movies.movies?.first?.imdbID else {return}
+                
+                if object.count != 0 && savedMovie == movieObject.imdbID
+                {
+                    
+                     dispatch_async(dispatch_get_main_queue(),{
+                    self.fullPlot.text = movies.movies?.first?.fullPlot
+                   })
+                }
+                else if object.count != 0 && savedMovie != movieObject.imdbID
+                {
+                    
+                    guard let unwrappedMovie = movie else {return}
+                    
+                    self.store.getFullPlot(unwrappedMovie)
+                    {
+                        dispatch_async(dispatch_get_main_queue(),{
+                            self.fullPlot.text = self.movie?.fullPlot
+                           
+                        })
+                    }
+                    
+                }
+                
+            }
        
-         //print(plot)
-        dispatch_async(dispatch_get_main_queue(),{
-         self.fullPlot.text = plot
-        })
         }
-        
-        
+        catch{print("Error")}
     }
 
     override func didReceiveMemoryWarning() {

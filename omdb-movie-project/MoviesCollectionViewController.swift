@@ -28,10 +28,11 @@ class MoviesCollectionViewController: UICollectionViewController, UISearchBarDel
         searchBar.sizeToFit()
         searchBar.delegate = self
         searchBar.showsCancelButton = true
-        //searchBar.text = "Comedy"
+
         self.navigationItem.titleView = searchBar
-       // self.activityIndicator.hidden = true
-       // self.activityIndicator.startAnimating()
+       
+        self.tabBarController?.navigationItem.title = movie?.title
+        
         
        
         self.store.searchMoviesWith("Comedy", page: self.apiClient.pageNum) { (success) in
@@ -128,8 +129,6 @@ class MoviesCollectionViewController: UICollectionViewController, UISearchBarDel
                         cell.moviePoster.image = UIImage.init(data: unwrappedPoster)
                         
                         
-                      //  self.activityIndicator.hidden = false
-                       // self.activityIndicator.stopAnimating()
                     })
                 }
             }
